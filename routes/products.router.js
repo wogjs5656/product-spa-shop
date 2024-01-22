@@ -17,10 +17,7 @@ router.post('/products', async (req, res, next) => {
         .json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
     }
 
-    const productMaxOrder = await Product.findOne().sort('-order').exec();
-    const order = productMaxOrder ? productMaxOrder.order + 1 : 1;
-
-    const newProduct = new Product({ title, content, author, password, order });
+    const newProduct = new Product({ title, content, author, password});
     await newProduct.save();
 
     return res.status(201).json({ message: '상품을 등록하였습니다.' });
@@ -85,7 +82,7 @@ router.put('/products/:productsId', async (req, res, next) => {
     if (!currentProduct) {
       return res.status(404).json({ message: '상품 조회에 실패하였습니다.' });
     }
-
+    
     // 비밀번호가 일치하는 경우에만 수정 진행
     if (currentProduct.password === Number(password)) {
       // 상태 및 내용은 항상 수정
