@@ -19,7 +19,13 @@ router.post('/products', async (req, res, next) => {
 
     const status = 'FOR_SALE';
 
-    const newProduct = new Product({ title, content, author, password, status });
+    const newProduct = new Product({
+      title,
+      content,
+      author,
+      password,
+      status,
+    });
     await newProduct.save();
 
     return res.status(201).json({ message: '상품을 등록하였습니다.' });
