@@ -17,7 +17,9 @@ router.post('/products', async (req, res, next) => {
         .json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
     }
 
-    const newProduct = new Product({ title, content, author, password});
+    const status = 'FOR_SALE';
+
+    const newProduct = new Product({ title, content, author, password, status });
     await newProduct.save();
 
     return res.status(201).json({ message: '상품을 등록하였습니다.' });
@@ -82,7 +84,7 @@ router.put('/products/:productsId', async (req, res, next) => {
     if (!currentProduct) {
       return res.status(404).json({ message: '상품 조회에 실패하였습니다.' });
     }
-    
+
     // 비밀번호가 일치하는 경우에만 수정 진행
     if (currentProduct.password === Number(password)) {
       // 상태 및 내용은 항상 수정
@@ -97,10 +99,14 @@ router.put('/products/:productsId', async (req, res, next) => {
       // 상품 정보 저장
       await currentProduct.save();
 
-      return res.status(200).json({ message: '상품 정보가 성공적으로 수정되었습니다.' });
+      return res
+        .status(200)
+        .json({ message: '상품 정보가 성공적으로 수정되었습니다.' });
     } else {
       // 비밀번호 불일치 시 에러 응답
-      return res.status(401).json({ message: '상품을 수정할 권한이 없습니다.' });
+      return res
+        .status(401)
+        .json({ message: '상품을 수정할 권한이 없습니다.' });
     }
   } catch (error) {
     console.error(error);
