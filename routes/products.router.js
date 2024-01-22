@@ -17,14 +17,12 @@ router.post('/products', async (req, res, next) => {
         .json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
     }
 
-    const status = 'FOR_SALE';
-
     const newProduct = new Product({
       title,
       content,
       author,
       password,
-      status,
+      status: "FOR_SALE",
     });
     await newProduct.save();
 

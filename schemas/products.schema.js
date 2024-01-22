@@ -21,6 +21,7 @@ const productsSchema = new mongoose.Schema({
   },
   status: {
     type: String,
+    default: "FOR_SALE",
   },
   createdAt: {
     type: Date,
