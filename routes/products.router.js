@@ -16,13 +16,11 @@ router.post('/products', async (req, res, next) => {
         .status(400)
         .json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
     }
-
     const newProduct = new Product({
       title,
       content,
       author,
       password,
-      status: "FOR_SALE",
     });
     await newProduct.save();
 
@@ -90,19 +88,14 @@ router.put('/products/:productsId', async (req, res, next) => {
     }
 
     // 비밀번호가 일치하는 경우에만 수정 진행
-    if (currentProduct.password === Number(password)) {
+    if (currentProduct.password === String(password)) {
       // 상태 및 내용은 항상 수정
       currentProduct.status = status;
       currentProduct.content = content;
 
-      // 제목이 입력된 경우에만 수정
-      if (title) {
-        currentProduct.title = title;
-      }
 
       // 상품 정보 저장
       await currentProduct.save();
-
       return res
         .status(200)
         .json({ message: '상품 정보가 성공적으로 수정되었습니다.' });

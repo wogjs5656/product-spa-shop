@@ -16,11 +16,12 @@ const productsSchema = new mongoose.Schema({
     required: true,
   },
   password: {
-    type: Number,
+    type: String,                       // 비밀번호 String으로 처리.
     required: true,
   },
   status: {
     type: String,
+    enum: ["FOR_SALE","SOLD_OUT"],      // enum 추가로 두 가지 값만 가질 수 있게 추가
     default: "FOR_SALE",
   },
   createdAt: {
